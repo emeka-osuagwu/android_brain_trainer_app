@@ -3,9 +3,11 @@ package com.carbontech.braintrainner;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     TextView notification_text_view;
     TextView question_text_view;
     TextView score_text_view;
+    RelativeLayout view_2;
 
     Button start_button;
     Button ans_button_1;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         question_text_view = (TextView) findViewById(R.id.question_text_view);
         notification_text_view = (TextView) findViewById(R.id.notification_text_view);
         score_text_view = (TextView) findViewById(R.id.score_text_view);
+        view_2 = (RelativeLayout) findViewById(R.id.view_2);
 
         start_button = (Button) findViewById(R.id.start_button);
         ans_button_1 = (Button) findViewById(R.id.ans_button_1);
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startTimer(){
 
-        countDownTimer = new CountDownTimer(3100, 1000) {
+        countDownTimer = new CountDownTimer(30100, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -139,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void start(View view){
         start_button.setVisibility(View.INVISIBLE);
+        view_2.setVisibility(View.VISIBLE);
     }
 
     public void playAgain(View view){

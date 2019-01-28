@@ -1,7 +1,9 @@
 package com.carbontech.braintrainner;
 
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +16,9 @@ public class MainActivity extends AppCompatActivity {
     Button start_button;
     String question_to_string;
     Random rand = new Random();
+    TextView timer_text_view;
     TextView question_text_view;
+    CountDownTimer countDownTimer;
     ArrayList<Integer> answers = new ArrayList<Integer>();
 
     @Override
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        timer_text_view = (TextView) findViewById(R.id.timer_text_view);
         start_button = (Button) findViewById(R.id.start_button);
         question_text_view = (TextView) findViewById(R.id.question_text_view);
         Button ans_button_1 = (Button) findViewById(R.id.ans_button_1);
@@ -59,6 +64,25 @@ public class MainActivity extends AppCompatActivity {
         ans_button_2.setText(Integer.toString(answers.get(1)));
         ans_button_3.setText(Integer.toString(answers.get(2)));
         ans_button_4.setText(Integer.toString(answers.get(3)));
+
+    }
+
+    public void startTimer(){
+
+        countDownTimer = new CountDownTimer(1000 * 3000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long sec = millisUntilFinished * 1000;
+                timer_text_view.setText(Long.toString(sec) + "s");
+                Log.i("timer", "runing");
+            }
+
+            @Override
+            public void onFinish() {
+                timer_text_view.setText("00s");
+            }
+        }.start();
     }
 
     public void start(View view){

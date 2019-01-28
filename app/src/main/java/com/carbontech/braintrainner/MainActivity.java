@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     int score = 0;
     int question = 0;
     int correctAnsLocation;
+    boolean played = false;
 
     String question_to_string;
     Random rand = new Random();
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button ans_button_2;
     Button ans_button_3;
     Button ans_button_4;
+    Button play_again_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +52,30 @@ public class MainActivity extends AppCompatActivity {
         ans_button_2 = (Button) findViewById(R.id.ans_button_2);
         ans_button_3 = (Button) findViewById(R.id.ans_button_3);
         ans_button_4 = (Button) findViewById(R.id.ans_button_4);
+        play_again_button = (Button) findViewById(R.id.play_again_button);
+
 
         generateQuestion();
+        startTimer();
+    }
+
+    public void showResult(){
+        notification_text_view.setText("You scored: " + Integer.toString(score) + "/" + Integer.toString(question));
     }
 
     public void selectAns(View view){
 
-        if (view.getTag().toString().equals(Integer.toString(1 + correctAnsLocation))){
-            score++;
-            notification_text_view.setText("Correct!");
+        if (!played) {
+            if (view.getTag().toString().equals(Integer.toString(1 + correctAnsLocation))) {
+                score++;
+                notification_text_view.setText("Correct!");
+            } else {
+                notification_text_view.setText("Wrong!");
+            }
+            question++;
+            score_text_view.setText(Integer.toString(score) + "/" + Integer.toString(question));
+            generateQuestion();
         }
-        else{
-            notification_text_view.setText("Wrong!");
-        }
-        question++;
-        score_text_view.setText(Integer.toString(score) + "/" + Integer.toString(question));
-        generateQuestion();
     }
 
     public void generateQuestion(){
@@ -106,14 +116,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void startTimer(){
 
-        countDownTimer = new CountDownTimer(1000 * 3000, 1000) {
+        countDownTimer = new CountDownTimer(3100, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                long sec = millisUntilFinished * 1000;
+                long sec = millisUntilFinished / 1000;
                 timer_text_view.setText(Long.toString(sec) + "s");
                 Log.i("timer", "runing");
             }
@@ -121,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timer_text_view.setText("00s");
+                showResult();
+                played = true;
+                play_again_button.setVisibility(View.VISIBLE);
             }
         }.start();
     }
@@ -128,5 +140,15 @@ public class MainActivity extends AppCompatActivity {
     public void start(View view){
         start_button.setVisibility(View.INVISIBLE);
     }
+
+    public void playAgain(View view){
+        view.setVisibility(View.INVISIBLE);
+        notification_text_view.setText("");
+        countDownTimer.start();
+        played = false;
+        generateQuestion();
+    }
+
+
 }
 

@@ -154,6 +154,5 @@ public class MainActivity extends AppCompatActivity {
         generateQuestion();
     }
 
-
 }
 

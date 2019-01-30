@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         notification_text_view.setText("");
         countDownTimer.start();
         played = false;
+        score_text_view.setText("0/0");
         generateQuestion();
     }
 
